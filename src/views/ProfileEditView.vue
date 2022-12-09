@@ -16,21 +16,38 @@ export default {
         job: "",
         company: "",
       },
+      user: {
+        isPass: "",
+      },
+      buttonDeleteShow: false,
     };
   },
   computed: {
     ...mapState(useDataStore, ["dataOneProfile"]),
   },
   methods: {
-    ...mapActions(useDataStore, ["handleEditProfile", "handleOneProfile"]),
+    ...mapActions(useDataStore, [
+      "handleEditProfile",
+      "handleOneProfile",
+      "handlePatch2FA",
+      "handleDeleteUser",
+    ]),
     onFileChange() {
       this.profile.profilePict = this.$refs.file.files[0];
+    },
+    buttonDelete() {
+      if (this.buttonDeleteShow === false) {
+        this.buttonDeleteShow = true;
+      } else {
+        this.buttonDeleteShow = false;
+      }
     },
     async waitOneFetch() {
       try {
         await this.handleOneProfile();
         this.profile = { ...this.dataOneProfile };
         this.profile.dateOfBirth = this.profile.dateOfBirth.slice(0, 10);
+        this.user.isPass = { ...this.dataOneProfile.User.statusTwoFAuth };
       } catch (err) {
         console.log(err);
       }
@@ -346,19 +363,15 @@ export default {
               <!-- Card header START -->
               <div class="card-header border-0 pb-0">
                 <h5 class="card-title">Notification</h5>
-                <p class="mb-0">
-                  Tried law yet style child. The bore of true of no be deal.
-                  Frequently sufficient to be unaffected. The furnished she
-                  concluded depending procuring concealed.
-                </p>
+                <p class="mb-0">COOMING SOON</p>
               </div>
               <!-- Card header START -->
               <!-- Card body START -->
-              <div class="card-body pb-0">
-                <!-- Notification START -->
-                <ul class="list-group list-group-flush">
-                  <!-- Notification list item -->
-                  <li
+              <!-- <div class="card-body pb-0">
+                <!- Notification START -->
+              <!-- <ul class="list-group list-group-flush"> -->
+              <!-- Notification list item -->
+              <!-- <li
                     class="list-group-item d-flex justify-content-between align-items-center px-0 py-3"
                   >
                     <div class="me-2">
@@ -376,9 +389,9 @@ export default {
                         checked
                       />
                     </div>
-                  </li>
-                  <!-- Notification list item -->
-                  <li
+                  </li> -->
+              <!-- Notification list item -->
+              <!-- <li
                     class="list-group-item d-flex justify-content-between align-items-center px-0 py-3"
                   >
                     <div class="me-2">
@@ -396,9 +409,9 @@ export default {
                         checked
                       />
                     </div>
-                  </li>
-                  <!-- Notification list item -->
-                  <li
+                  </li> -->
+              <!-- Notification list item -->
+              <!-- <li
                     class="list-group-item d-flex justify-content-between align-items-center px-0 py-3"
                   >
                     <div class="me-2">
@@ -415,9 +428,9 @@ export default {
                         id="NotiSwitchCheckChecked3"
                       />
                     </div>
-                  </li>
-                  <!-- Notification list item -->
-                  <li
+                  </li> -->
+              <!-- Notification list item -->
+              <!-- <li
                     class="list-group-item d-flex justify-content-between align-items-center px-0 py-3"
                   >
                     <div class="me-2">
@@ -434,9 +447,9 @@ export default {
                         id="NotiSwitchCheckChecked4"
                       />
                     </div>
-                  </li>
-                  <!-- Notification list item -->
-                  <li
+                  </li> -->
+              <!-- Notification list item -->
+              <!-- <li
                     class="list-group-item d-flex justify-content-between align-items-center px-0 py-3"
                   >
                     <div class="me-2">
@@ -454,16 +467,16 @@ export default {
                         checked
                       />
                     </div>
-                  </li>
-                  <!-- Notification list item -->
-                  <li class="list-group-item px-0 py-3">
-                    <!-- Accordion START -->
-                    <div
+                  </li> -->
+              <!-- Notification list item -->
+              <!-- <li class="list-group-item px-0 py-3"> -->
+              <!-- Accordion START -->
+              <!-- <div
                       class="accordion accordion-flush border-0"
                       id="emailNotifications"
-                    >
-                      <!-- Accordion item -->
-                      <div class="accordion-item bg-transparent">
+                    > -->
+              <!-- Accordion item -->
+              <!-- <div class="accordion-item bg-transparent">
                         <h2 class="accordion-header" id="flush-headingOne">
                           <a
                             href="#!"
@@ -489,9 +502,9 @@ export default {
                           aria-labelledby="flush-headingOne"
                           data-bs-parent="#emailNotifications"
                         >
-                          <div class="accordion-body p-0 pt-3">
-                            <!-- Notification list item -->
-                            <div class="form-check">
+                          <div class="accordion-body p-0 pt-3"> -->
+              <!-- Notification list item -->
+              <!-- <div class="form-check">
                               <input
                                 class="form-check-input"
                                 type="checkbox"
@@ -505,9 +518,9 @@ export default {
                               >
                                 Product emails
                               </label>
-                            </div>
-                            <!-- Notification list item -->
-                            <div class="form-check">
+                            </div> -->
+              <!-- Notification list item -->
+              <!-- <div class="form-check">
                               <input
                                 class="form-check-input"
                                 type="checkbox"
@@ -523,9 +536,9 @@ export default {
                             </div>
                             <hr />
                             <div class="mt-3">
-                              <h6>Email frequency</h6>
-                              <!-- Notification list item -->
-                              <div class="form-check">
+                              <h6>Email frequency</h6> -->
+              <!-- Notification list item -->
+              <!-- <div class="form-check">
                                 <input
                                   class="form-check-input"
                                   type="radio"
@@ -538,9 +551,9 @@ export default {
                                 >
                                   Daily
                                 </label>
-                              </div>
-                              <!-- Notification list item -->
-                              <div class="form-check">
+                              </div> -->
+              <!-- Notification list item -->
+              <!-- <div class="form-check">
                                 <input
                                   class="form-check-input"
                                   type="radio"
@@ -554,9 +567,9 @@ export default {
                                 >
                                   Weekly
                                 </label>
-                              </div>
-                              <!-- Notification list item -->
-                              <div class="form-check">
+                              </div> -->
+              <!-- Notification list item -->
+              <!-- <div class="form-check">
                                 <input
                                   class="form-check-input"
                                   type="radio"
@@ -569,9 +582,9 @@ export default {
                                 >
                                   Periodically
                                 </label>
-                              </div>
-                              <!-- Notification list item -->
-                              <div class="form-check">
+                              </div> -->
+              <!-- Notification list item -->
+              <!-- <div class="form-check">
                                 <input
                                   class="form-check-input"
                                   type="radio"
@@ -590,11 +603,11 @@ export default {
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <!-- Accordion END -->
-                  </li>
-                  <!-- Notification list item -->
-                  <li
+                    </div> -->
+              <!-- Accordion END -->
+              <!-- </li> -->
+              <!-- Notification list item -->
+              <!-- <li
                     class="list-group-item d-flex justify-content-between align-items-center px-0 py-3"
                   >
                     <div class="me-2">
@@ -612,9 +625,9 @@ export default {
                         checked
                       />
                     </div>
-                  </li>
-                  <!-- Notification list item -->
-                  <li
+                  </li> -->
+              <!-- Notification list item -->
+              <!-- <li
                     class="list-group-item d-flex justify-content-between align-items-center px-0 py-3"
                   >
                     <div class="me-2">
@@ -636,16 +649,17 @@ export default {
                       />
                     </div>
                   </li>
-                </ul>
-                <!-- Notification END -->
-              </div>
+                </ul> -->
+              <!-- Notification END -->
+              <!-- </div> -->
+
               <!-- Card body END -->
               <!-- Button save -->
-              <div class="card-footer pt-0 text-end border-0">
+              <!-- <div class="card-footer pt-0 text-end border-0">
                 <button type="submit" class="btn btn-sm btn-primary mb-0">
                   Save changes
                 </button>
-              </div>
+              </div> -->
             </div>
             <!-- Notification END -->
           </div>
@@ -675,17 +689,25 @@ export default {
                     <div class="me-md-3">
                       <h6 class="mb-0">Use two-factor authentication</h6>
                       <p class="small mb-0">
-                        Unaffected occasional thoroughly. Adieus it no wonders
-                        spirit houses.
+                        Enable two-factor authentication to add an extra layer
+                        of security to your account.
+                        <!-- {{ profile.User.statusTwoFAuth }}} -->
                       </p>
                     </div>
-                    <button class="btn btn-primary-soft btn-sm mt-1 mt-md-0">
-                      <i class="bi bi-pencil-square"></i> Change
-                    </button>
+                    <div class="form-check form-switch">
+                      <input
+                        v-model="user.isPass"
+                        @change="handlePatch2FA"
+                        class="form-check-input"
+                        type="checkbox"
+                        role="switch"
+                        id="comSwitchCheckChecked"
+                      />
+                    </div>
                   </li>
 
                   <!-- Privacy item -->
-                  <li
+                  <!-- <li
                     class="list-group-item d-md-flex justify-content-between align-items-start"
                   >
                     <div class="me-md-3">
@@ -701,10 +723,10 @@ export default {
                     >
                       <i class="bi bi-eye"></i> View
                     </button>
-                  </li>
+                  </li> -->
 
                   <!-- Privacy item -->
-                  <li
+                  <!-- <li
                     class="list-group-item d-md-flex justify-content-between align-items-start"
                   >
                     <div class="me-md-3">
@@ -716,10 +738,10 @@ export default {
                     <button class="btn btn-primary-soft btn-sm mt-1 mt-md-0">
                       <i class="bi bi-pencil-square"></i> Change
                     </button>
-                  </li>
+                  </li> -->
 
                   <!-- Privacy item -->
-                  <li
+                  <!-- <li
                     class="list-group-item d-md-flex justify-content-between align-items-start"
                   >
                     <div class="me-md-3">
@@ -731,10 +753,10 @@ export default {
                     <button class="btn btn-primary-soft btn-sm mt-1 mt-md-0">
                       <i class="bi bi-pencil-square"></i> Change
                     </button>
-                  </li>
+                  </li> -->
 
                   <!-- Privacy item -->
-                  <li
+                  <!-- <li
                     class="list-group-item d-md-flex justify-content-between align-items-start"
                   >
                     <div class="me-md-3">
@@ -746,17 +768,17 @@ export default {
                     <button class="btn btn-primary-soft btn-sm mt-1 mt-md-0">
                       <i class="bi bi-pencil-square"></i> Change
                     </button>
-                  </li>
+                  </li> -->
                 </ul>
                 <!-- Privacy END -->
               </div>
               <!-- Card body END -->
               <!-- Button save -->
-              <div class="card-footer pt-0 text-end border-0">
+              <!-- <div class="card-footer pt-0 text-end border-0">
                 <button type="submit" class="btn btn-sm btn-primary mb-0">
                   Save changes
                 </button>
-              </div>
+              </div> -->
             </div>
             <!-- Privacy and safety END -->
           </div>
@@ -769,19 +791,15 @@ export default {
               <!-- Title START -->
               <div class="card-header border-0 pb-0">
                 <h5 class="card-title">Who can connect with you?</h5>
-                <p class="mb-0">
-                  He moonlights difficult engrossed it, sportsmen. Interested
-                  has all Devonshire difficulty gay assistance joy. Unaffected
-                  at ye of compliment alteration to.
-                </p>
+                <p class="mb-0">COOMING SOON</p>
               </div>
               <!-- Title START -->
               <!-- Card body START -->
-              <div class="card-body">
-                <!-- Accordion START -->
-                <div class="accordion" id="communications">
-                  <!-- Accordion item -->
-                  <div class="accordion-item bg-transparent">
+              <!-- <div class="card-body"> -->
+              <!-- Accordion START -->
+              <!-- <div class="accordion" id="communications"> -->
+              <!-- Accordion item -->
+              <!-- <div class="accordion-item bg-transparent">
                     <h2 class="accordion-header" id="communicationOne">
                       <button
                         class="accordion-button mb-0 h6"
@@ -793,17 +811,17 @@ export default {
                       >
                         Connection request
                       </button>
-                    </h2>
-                    <!-- Accordion info -->
-                    <div
+                    </h2> -->
+              <!-- Accordion info -->
+              <!-- <div
                       id="communicationcollapseOne"
                       class="accordion-collapse collapse show"
                       aria-labelledby="communicationOne"
                       data-bs-parent="#communications"
                     >
-                      <div class="accordion-body">
-                        <!-- Notification list item -->
-                        <div class="form-check">
+                      <div class="accordion-body"> -->
+              <!-- Notification list item -->
+              <!-- <div class="form-check">
                           <input
                             class="form-check-input"
                             type="radio"
@@ -813,9 +831,9 @@ export default {
                           <label class="form-check-label" for="ComRadio5">
                             Everyone on social (recommended)
                           </label>
-                        </div>
-                        <!-- Notification list item -->
-                        <div class="form-check">
+                        </div> -->
+              <!-- Notification list item -->
+              <!-- <div class="form-check">
                           <input
                             class="form-check-input"
                             type="radio"
@@ -826,9 +844,9 @@ export default {
                           <label class="form-check-label" for="ComRadio2">
                             Only people who know your email address
                           </label>
-                        </div>
-                        <!-- Notification list item -->
-                        <div class="form-check">
+                        </div> -->
+              <!-- Notification list item -->
+              <!-- <div class="form-check">
                           <input
                             class="form-check-input"
                             type="radio"
@@ -842,9 +860,9 @@ export default {
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <!-- Accordion item -->
-                  <div class="accordion-item bg-transparent">
+                  </div> -->
+              <!-- Accordion item -->
+              <!-- <div class="accordion-item bg-transparent">
                     <h2 class="accordion-header" id="communicationTwo">
                       <button
                         class="accordion-button mb-0 h6 collapsed"
@@ -856,18 +874,18 @@ export default {
                       >
                         Who can message you
                       </button>
-                    </h2>
-                    <!-- Accordion info -->
-                    <div
+                    </h2> -->
+              <!-- Accordion info -->
+              <!-- <div
                       id="communicationcollapseTwo"
                       class="accordion-collapse collapse"
                       aria-labelledby="communicationTwo"
                       data-bs-parent="#communications"
                     >
                       <div class="accordion-body">
-                        <ul class="list-group list-group-flush">
-                          <!-- Notification list item -->
-                          <li
+                        <ul class="list-group list-group-flush"> -->
+              <!-- Notification list item -->
+              <!-- <li
                             class="list-group-item d-sm-flex justify-content-between align-items-center px-0 py-1 border-0"
                           >
                             <div class="me-2">
@@ -883,9 +901,9 @@ export default {
                                 id="comSwitchCheckChecked"
                               />
                             </div>
-                          </li>
-                          <!-- Notification list item -->
-                          <li
+                          </li> -->
+              <!-- Notification list item -->
+              <!-- <li
                             class="list-group-item d-sm-flex justify-content-between align-items-center px-0 py-1 border-0"
                           >
                             <div class="me-2">
@@ -902,9 +920,9 @@ export default {
                                 checked
                               />
                             </div>
-                          </li>
-                          <!-- Notification list item -->
-                          <li
+                          </li> -->
+              <!-- Notification list item -->
+              <!-- <li
                             class="list-group-item d-sm-flex justify-content-between align-items-center px-0 py-1 border-0"
                           >
                             <div class="me-2">
@@ -928,9 +946,9 @@ export default {
                         </ul>
                       </div>
                     </div>
-                  </div>
-                  <!-- Accordion item -->
-                  <div class="accordion-item bg-transparent">
+                  </div> -->
+              <!-- Accordion item -->
+              <!-- <div class="accordion-item bg-transparent">
                     <h2 class="accordion-header" id="communicationThree">
                       <button
                         class="accordion-button mb-0 h6 collapsed"
@@ -942,18 +960,18 @@ export default {
                       >
                         How people can find you
                       </button>
-                    </h2>
-                    <!-- Accordion info -->
-                    <div
+                    </h2> -->
+              <!-- Accordion info -->
+              <!-- <div
                       id="communicationcollapseThree"
                       class="accordion-collapse collapse"
                       aria-labelledby="communicationThree"
                       data-bs-parent="#communications"
                     >
                       <div class="accordion-body">
-                        <ul class="list-group list-group-flush">
-                          <!-- Notification list item -->
-                          <li
+                        <ul class="list-group list-group-flush"> -->
+              <!-- Notification list item -->
+              <!-- <li
                             class="list-group-item d-sm-flex justify-content-between align-items-center px-0 py-1 border-0"
                           >
                             <div class="me-2">
@@ -970,9 +988,9 @@ export default {
                                 checked
                               />
                             </div>
-                          </li>
-                          <!-- Notification list item -->
-                          <li
+                          </li> -->
+              <!-- Notification list item -->
+              <!-- <li
                             class="list-group-item d-sm-flex justify-content-between align-items-center px-0 py-1 border-0"
                           >
                             <div class="me-2">
@@ -988,9 +1006,9 @@ export default {
                                 id="comSwitchCheckChecked5"
                               />
                             </div>
-                          </li>
-                          <!-- Notification list item -->
-                          <li
+                          </li> -->
+              <!-- Notification list item -->
+              <!-- <li
                             class="list-group-item d-sm-flex justify-content-between align-items-center px-0 py-1 border-0"
                           >
                             <div class="me-2">
@@ -1015,16 +1033,16 @@ export default {
                       </div>
                     </div>
                   </div>
-                </div>
-                <!-- Accordion END -->
-              </div>
+                </div> -->
+              <!-- Accordion END -->
+              <!-- </div> -->
               <!-- Card body END -->
               <!-- Button save -->
-              <div class="card-footer pt-0 text-end border-0">
+              <!-- <div class="card-footer pt-0 text-end border-0">
                 <button type="submit" class="btn btn-sm btn-primary mb-0">
                   Save changes
                 </button>
-              </div>
+              </div> -->
             </div>
             <!-- Communications  END -->
           </div>
@@ -1037,18 +1055,14 @@ export default {
               <!-- Title START -->
               <div class="card-header border-0 pb-0">
                 <h5 class="card-title">Messaging privacy settings</h5>
-                <p class="mb-0">
-                  As young ye hopes no he place means. Partiality diminution gay
-                  yet entreaties admiration. In mention perhaps attempt pointed
-                  suppose. Unknown ye chamber of warrant of Norland arrived.
-                </p>
+                <p class="mb-0">COOMING SOON</p>
               </div>
               <!-- Title START -->
-              <div class="card-body">
-                <!-- Settings style START -->
-                <ul class="list-group list-group-flush">
-                  <!-- Message list item -->
-                  <li
+              <!-- <div class="card-body"> -->
+              <!-- Settings style START -->
+              <!-- <ul class="list-group list-group-flush"> -->
+              <!-- Message list item -->
+              <!-- <li
                     class="list-group-item d-flex justify-content-between align-items-center px-0"
                   >
                     <div class="me-2">
@@ -1063,9 +1077,9 @@ export default {
                         checked
                       />
                     </div>
-                  </li>
-                  <!-- Message list item -->
-                  <li
+                  </li> -->
+              <!-- Message list item -->
+              <!-- <li
                     class="list-group-item d-flex justify-content-between align-items-center px-0"
                   >
                     <div class="me-2">
@@ -1080,9 +1094,9 @@ export default {
                         checked
                       />
                     </div>
-                  </li>
-                  <!-- Message list item -->
-                  <li
+                  </li> -->
+              <!-- Message list item -->
+              <!-- <li
                     class="list-group-item d-flex justify-content-between align-items-center px-0"
                   >
                     <div class="me-2">
@@ -1098,9 +1112,9 @@ export default {
                         id="msgSwitchCheckChecked3"
                       />
                     </div>
-                  </li>
-                  <!-- Message list item -->
-                  <li
+                  </li> -->
+              <!-- Message list item -->
+              <!-- <li
                     class="list-group-item d-flex justify-content-between align-items-center px-0"
                   >
                     <div class="me-2">
@@ -1114,9 +1128,9 @@ export default {
                         id="msgSwitchCheckChecked4"
                       />
                     </div>
-                  </li>
-                  <!-- Message list item -->
-                  <li
+                  </li> -->
+              <!-- Message list item -->
+              <!-- <li
                     class="list-group-item d-flex justify-content-between align-items-center px-0"
                   >
                     <div class="me-2">
@@ -1133,9 +1147,9 @@ export default {
                         checked
                       />
                     </div>
-                  </li>
-                  <!-- Message list item -->
-                  <li
+                  </li> -->
+              <!-- Message list item -->
+              <!-- <li
                     class="list-group-item d-flex justify-content-between align-items-center px-0"
                   >
                     <div class="me-2">
@@ -1151,33 +1165,33 @@ export default {
                       />
                     </div>
                   </li>
-                </ul>
-                <!-- Message END -->
-              </div>
+                </ul> -->
+              <!-- Message END -->
+              <!-- </div> -->
               <!-- Button save -->
-              <div class="card-footer pt-0 text-end border-0">
+              <!-- <div class="card-footer pt-0 text-end border-0">
                 <button type="submit" class="btn btn-sm btn-primary mb-0">
                   Save changes
                 </button>
-              </div>
+              </div> -->
             </div>
             <!-- Messaging privacy END -->
             <!-- Messaging experience START -->
-            <div class="card">
-              <!-- Card header START -->
-              <div class="card-header border-0 pb-0">
-                <h5 class="card-title">Messaging experience</h5>
+            <!-- <div class="card"> -->
+            <!-- Card header START -->
+            <!-- <div class="card-header border-0 pb-0"> -->
+            <!-- <h5 class="card-title">Messaging experience</h5>
                 <p class="mb-0">
                   Arrived off she elderly beloved him affixed noisier yet.
                 </p>
-              </div>
-              <!-- Card header START -->
-              <!-- Card body START -->
-              <div class="card-body">
-                <!-- Message START -->
-                <ul class="list-group list-group-flush">
-                  <!-- Message list item -->
-                  <li
+              </div> -->
+            <!-- Card header START -->
+            <!-- Card body START -->
+            <!-- <div class="card-body"> -->
+            <!-- Message START -->
+            <!-- <ul class="list-group list-group-flush"> -->
+            <!-- Message list item -->
+            <!-- <li
                     class="list-group-item d-sm-flex justify-content-between align-items-center px-0"
                   >
                     <div class="me-2">
@@ -1186,20 +1200,20 @@ export default {
                     <button class="btn btn-primary-soft btn-sm mt-1 mt-md-0">
                       <i class="bi bi-pencil-square"></i> Change
                     </button>
-                  </li>
-                  <!-- Message list item -->
-                  <li
+                  </li> -->
+            <!-- Message list item -->
+            <!-- <li
                     class="list-group-item d-sm-flex justify-content-between align-items-center px-0"
                   >
                     <div class="me-2">
                       <h6 class="mb-0">Message suggestions</h6>
-                    </div>
-                    <button class="btn btn-primary-soft btn-sm mt-1 mt-md-0">
+                    </div> -->
+            <!-- <button class="btn btn-primary-soft btn-sm mt-1 mt-md-0">
                       <i class="bi bi-pencil-square"></i> Change
                     </button>
-                  </li>
-                  <!-- Message list item -->
-                  <li
+                  </li> -->
+            <!-- Message list item -->
+            <!-- <li
                     class="list-group-item d-sm-flex justify-content-between align-items-center px-0"
                   >
                     <div class="me-2">
@@ -1209,17 +1223,17 @@ export default {
                       <i class="bi bi-pencil-square"></i> Change
                     </button>
                   </li>
-                </ul>
-                <!-- Message END -->
-              </div>
-              <!-- Card body END -->
-              <!-- Button save -->
-              <div class="card-footer pt-0 text-end border-0">
+                </ul> -->
+            <!-- Message END -->
+            <!-- </div> -->
+            <!-- Card body END -->
+            <!-- Button save -->
+            <!-- <div class="card-footer pt-0 text-end border-0">
                 <button type="submit" class="btn btn-sm btn-primary mb-0">
                   Save changes
                 </button>
-              </div>
-            </div>
+              </div> -->
+            <!-- </div> -->
             <!-- Messaging experience END -->
           </div>
           <!-- Messaging tab END -->
@@ -1243,13 +1257,14 @@ export default {
                 <!-- Delete START -->
                 <h6>Before you go...</h6>
                 <ul>
-                  <li>Take a backup of your data <a href="#">Here</a></li>
+                  <!-- <li>Take a backup of your data <a href="#">Here</a></li> -->
                   <li>
                     If you delete your account, you will lose your all data.
                   </li>
                 </ul>
                 <div class="form-check form-check-md my-4">
                   <input
+                    @change="buttonDelete"
                     class="form-check-input"
                     type="checkbox"
                     value=""
@@ -1259,10 +1274,11 @@ export default {
                     >Yes, I'd like to delete my account</label
                   >
                 </div>
-                <a href="#" class="btn btn-success-soft btn-sm mb-2 mb-sm-0"
-                  >Keep my account</a
-                >
-                <a href="#" class="btn btn-danger btn-sm mb-0"
+                <a
+                  v-if="buttonDeleteShow"
+                  href="#"
+                  @click.prevent="handleDeleteUser"
+                  class="btn btn-danger btn-sm mb-0"
                   >Delete my account</a
                 >
                 <!-- Delete END -->

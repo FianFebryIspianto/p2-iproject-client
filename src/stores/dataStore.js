@@ -2,7 +2,8 @@ import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import axios from "axios";
 import Swal from "sweetalert2";
-const baseUrl = "https://fiansocialbokk-iproject-production.up.railway.app";
+// const baseUrl = "https://fiansocialbokk-iproject-production.up.railway.app";
+const baseUrl = "http://localhost:3000";
 export const useDataStore = defineStore("dataStore", {
   state: () => ({
     dataChat: [],
@@ -29,7 +30,8 @@ export const useDataStore = defineStore("dataStore", {
         this.isPass = false;
         localStorage.setItem("access_token", data.access_token);
         localStorage.setItem("id", data.id);
-        localStorage.setItem("isPass", false);
+        // set local storage isPass equal to dat
+        localStorage.setItem("isPass", data.isPass);
         this.router.push("/2FA");
       } catch (err) {
         this.handleError(err);
@@ -221,7 +223,23 @@ export const useDataStore = defineStore("dataStore", {
         this.handleError(err);
       }
     },
-
+    async handlePatch2FA(value) {
+      try {
+        const { data } = await axios({
+          method: "PATCH",
+          url: `${baseUrl}/users/2FA`,
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        this.handleOneProfile();
+      } catch (error) {
+        this.handleError(err);
+      }
+    },
     async handleAddComment(message, id) {
       try {
         // console.log(message, id, "<<<");
@@ -294,6 +312,38 @@ export const useDataStore = defineStore("dataStore", {
       localStorage.clear();
 
       this.router.push("/login");
+    },
+    async handleDeleteUser() {
+      try {
+        // console.log(id, "<<<");
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+        }).then(async (result) => {
+          try {
+            if (result.isConfirmed) {
+              const dataS = await axios({
+                method: "DELETE",
+                url: `${baseUrl}/users`,
+                headers: {
+                  access_token: localStorage.getItem("access_token"),
+                },
+              });
+              this.handleLogout();
+              console.log(`masuk delete`);
+            }
+          } catch (error) {
+            this.handleError(error);
+          }
+        });
+      } catch (err) {
+        this.handleError(err);
+      }
     },
   },
 });
